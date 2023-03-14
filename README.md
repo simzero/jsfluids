@@ -87,8 +87,14 @@ The following main open-source packages were used in this module:
 - [Eigen](https://eigen.tuxfamily.org)
 - [Emscripten](https://emscripten.org)
 - [ITHACA-FV](https://github.com/mathLab/ITHACA-FV)
+- [ONNX Runtime](https://onnxruntime.ai)
 - [OpenFOAM](https://www.openfoam.com)
 - [VTK](https://vtk.org)
+
+
+## Disclaimer
+
+This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM® and OpenCFD® trade marks. This offering is not approved or endorsed by any software packages mentioned above or their respective owners, and should not be considered as such.
 
 ## Release Candidate
 
