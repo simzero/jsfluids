@@ -79,6 +79,17 @@ The module supports:
 - [DeepCFD](https://github.com/mdribeiro/DeepCFD)
 - [ITHACA-FV](https://github.com/mathLab/ITHACA-FV) (laminar and turbulent steady-state supported as of today)
 
+## Third-party packages
+
+The following main open-source packages were used in this module:
+
+- [DeepCFD](https://github.com/mdribeiro/DeepCFD)
+- [Eigen](https://eigen.tuxfamily.org)
+- [Emscripten](https://emscripten.org)
+- [ITHACA-FV](https://github.com/mathLab/ITHACA-FV)
+- [OpenFOAM](https://www.openfoam.com)
+- [VTK](https://vtk.org)
+
 ## Release Candidate
 
 This version of the module is a release candidate and is not yet considered stable. Please use with caution and report any issues you encounter.
