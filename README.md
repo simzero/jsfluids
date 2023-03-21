@@ -2,7 +2,7 @@
 
 `jsfluids` is a high-level JavaScript module for inferring/solving fluid dynamics in real-time based on pre-constructed models. The module is also used as the interface with virtual worlds although can be used directly in a backend. The pre-constructed models are based on reduced-order models, data-driven ML or (soon) with PINNs. For ML-based models we rely on ONNX Runtime for solving the new fields and use `jsfluids` for handling inputs and results.
 
-You can use this module locally, and we've also made it available to you on our playground at https://cfd.xyz. On the playground,  you can directly play with the library and share your work. The playground is integrated into Babylon.js as the real-time 3D engine and include other tools such as ONNX and JSCAD for parametric advanced CAD modelling.
+You can use this module locally, and we've also made it available to you on our playground at https://play.simzero.com. On the playground, you can directly play with the library and share your work. The playground is integrated into Babylon.js as the real-time 3D engine and include other tools such as ONNX and JSCAD for parametric advanced CAD modelling.
 
 Examples for building the pre-constructed models will be soon available together with the code.
 
@@ -30,7 +30,7 @@ To use this module, you can require it in your Node.js code or access it via the
 import jsfluids from 'jsfluids'
 ```
 
-In any case you need call the following before using the module:
+In any case you need to call the following before using the module:
 
 ```
 async() => {
@@ -41,33 +41,28 @@ async() => {
 Once you have access to the module, you can call its functions as needed:
 
 ```
+    const model = jsfluids.ML;
+
     model.loadMesh(meshURL).then(() => {
       ort.InferenceSession.create(onnxURL).then((onnx) => {
-        const geometry = jscadModelling.primitives.cuboid({
-            center: [0, 0, 0],
-            size: [0.5*side/1000, 0.5*width/1000, 0.5*side/1000]
-        });
-        const stl = jscadIO.stlSerializer.serialize({ binary: false }, geometry);
-        const inputArray = Float32Array.from(model.getSDFAndRegion(stl[0]));
-        const inputTensor = new ort.Tensor('float32', inputArray, [1, 3, ny, nx]);
-        const feeds = { inputModel: inputTensor };
-
+        // jsfluids functions
+        ...
         onnx.run(feeds).then((results) => {
-          const Uxy = results['outputModel'].data.slice(0, 2 * nx * ny);
-          const U = new Float64Array(3 * nx * ny);
-          U.set(Uxy);
-
-          // Add zeros to the end of U for the velocity Z component
-          U.fill(0, Uxy.length);
-
-          model.setField({ name: "U", data: U });
-          model.update();
-
-          const grid = model.grid();
-          const result = model.probe({ field: "U", point: [0, 0, 0] });
-
+          // jsfluids functions
           ...
         });
+      });
+    });
+```
+or
+
+```
+    const model = jsfluids.ITHACAFV;
+
+    model.loadMesh(meshURL).then(() => {
+      model.loadModel(romURL).then(() => {
+         // jsfluids functions
+         ...
       });
     });
 ```
