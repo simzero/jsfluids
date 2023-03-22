@@ -33,9 +33,9 @@ import jsfluids from 'jsfluids'
 In any case you need to call the following before using the module:
 
 ```
-async() => {
+(async() => {
   await jsfluids.ready;
-}
+})();
 ```
 
 Once you have access to the module, you can call its functions as needed:
