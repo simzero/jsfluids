@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="jsfluids.ITHACAFV.html">ITHACAFV</a><ul class='methods'><li data-type='method'><a href="jsfluids.ITHACAFV.html#grid">grid</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#integrate">integrate</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#loadMesh">loadMesh</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#loadModel">loadModel</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#probe">probe</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#render">render</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#setComponent">setComponent</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#setOperations">setOperations</a></li><li data-type='method'><a href="jsfluids.ITHACAFV.html#update">update</a></li></ul></li><li><a href="jsfluids.ML.html">ML</a><ul class='methods'><li data-type='method'><a href="jsfluids.ML.html#SDFAndRegion">SDFAndRegion</a></li><li data-type='method'><a href="jsfluids.ML.html#grid">grid</a></li><li data-type='method'><a href="jsfluids.ML.html#integrate">integrate</a></li><li data-type='method'><a href="jsfluids.ML.html#loadMesh">loadMesh</a></li><li data-type='method'><a href="jsfluids.ML.html#probe">probe</a></li><li data-type='method'><a href="jsfluids.ML.html#render">render</a></li><li data-type='method'><a href="jsfluids.ML.html#setComponent">setComponent</a></li><li data-type='method'><a href="jsfluids.ML.html#setOperations">setOperations</a></li><li data-type='method'><a href="jsfluids.ML.html#update">update</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><h1><a href="https://github.com/simzero/jsfluids">jsfluids</a> - A high-level JS module for real-time CFD inference</h1>
+<p><code>jsfluids</code> is a high-level JavaScript module for inferring/solving fluid dynamics in real-time using pre-constructed models. The module serves as an interface with virtual worlds, but it can also be used directly in a backend. The pre-constructed models are based on reduced-order models, data-driven ML or (soon) with PINNs. For ML-based models we rely on ONNX Runtime for solving the new fields and use <code>jsfluids</code> for handling inputs and results. This can be used with any model as far as you have a VTK unstructured grid file (.vtu) and an ONNX model file (.onnx). You can directly export your model from the most used ML framework to ONNX. We have created a Python module <a href="https://github.com/simzero/cfdonnx">cfdonnx</a> to help with the export or conversion process and to overcome specific tasks or issues associated with ML-CFD models.</p>
+<p>You can use this module locally, and we've also made it available to you on our playground at https://play.simzero.com. On the playground,  you can directly play with the library and share your work. The playground is integrated into Babylon.js as the real-time 3D engine and include other tools such as ONNX and JSCAD for parametric advanced CAD modelling.</p>
+<p>Examples for building the pre-constructed models are available at <a href="https://github.com/simzero/openfoam-ml-rom">openfoam-ml-rom</a>.</p>
+<h2>Installation</h2>
+<p>You can install this module via npm:</p>
+<pre class="prettyprint source"><code>npm install @simzero/jsfluids
+</code></pre>
+<p>Or, you can load it as a script tag in your HTML file:</p>
+<pre class="prettyprint source"><code>&lt;script src=&quot;https://unpkg.com/@simzero/jsfluids/dist/browser.js&quot;>&lt;/script>
+</code></pre>
+<p>This module will soon be available as an ES6 module.</p>
+<h2>Usage</h2>
+<p>To use this module, you can require it in your Node.js code or access it via the global object in your browser code:</p>
+<pre class="prettyprint source"><code>import jsfluids from '@simzero/jsfluids'
+</code></pre>
+<p>In any case you need call the following before using the module:</p>
+<pre class="prettyprint source"><code>async() => {
+  await jsfluids.ready;
+}
+</code></pre>
+<p>Once you have access to the module, you can call its functions as needed.</p>
+<p><code>jsfluids</code> has two classes:</p>
+<ul>
+<li><code>jsfluids.ML</code>: A generic class for working with ML models, providing functions for pre-processing inputs, manipulating the results and interacting with virtual worlds.</li>
+<li><code>jsfluids.ITHACAFV</code>: An optional wrapper for ITHACA-FV (from rom-js).</li>
+</ul>
+<p>The following code shows an example for <code>jsfluids.ML</code>:</p>
+<pre class="prettyprint source"><code>   model = jsfluids.ML;
+
+    model.loadMesh(meshURL).then(() => {
+      ort.InferenceSession.create(onnxURL).then((onnx) => {
+        const geometry = jscadModelling.primitives.cuboid({
+            center: [0, 0, 0],
+            size: [0.5*side/1000, 0.5*width/1000, 0.5*side/1000]
+        });
+        const stl = jscadIO.stlSerializer.serialize({ binary: false }, geometry);
+        const inputArray = Float32Array.from(model.getSDFAndRegion(stl[0]));
+        const inputTensor = new ort.Tensor('float32', inputArray, [1, 3, ny, nx]);
+        const feeds = { inputModel: inputTensor };
+
+        onnx.run(feeds).then((results) => {
+          const Uxy = results['outputModel'].data.slice(0, 2 * nx * ny);
+          const U = new Float32Array(3 * nx * ny);
+          U.set(Uxy);
+
+          // Add zeros to the end of U for the velocity Z component
+          U.fill(0, Uxy.length);
+
+          model.setField({ name: &quot;U&quot;, data: U });
+          model.update();
+
+          const grid = model.grid();
+          const result = model.probe({ field: &quot;U&quot;, point: [0, 0, 0] });
+
+          ...
+        });
+      });
+    });
+</code></pre>
+<h2>Supported Packages for Pre-Constructed Models</h2>
+<p>The module is currently tested with models built with:</p>
+<ul>
+<li><a href="https://github.com/mdribeiro/DeepCFD">DeepCFD</a></li>
+<li><a href="https://github.com/mathLab/ITHACA-FV">ITHACA-FV</a> (laminar and turbulent steady-state supported as of today)</li>
+</ul>
+<h2>Third-party packages</h2>
+<p>The following main open-source packages were used as part of the module, in the examples or for building the ML models:</p>
+<ul>
+<li><a href="https://github.com/mdribeiro/DeepCFD">DeepCFD</a></li>
+<li><a href="https://eigen.tuxfamily.org">Eigen</a></li>
+<li><a href="https://emscripten.org">Emscripten</a></li>
+<li><a href="https://github.com/mathLab/ITHACA-FV">ITHACA-FV</a></li>
+<li><a href="https://onnxruntime.ai">ONNX Runtime</a></li>
+<li><a href="https://www.openfoam.com">OpenFOAM</a></li>
+<li><a href="https://vtk.org">VTK</a></li>
+</ul>
+<h2>Disclaimer</h2>
+<p>This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM® and OpenCFD® trade marks. This offering is not approved or endorsed by any software packages mentioned above or their respective owners, and should not be considered as such.</p>
+<h2>Release Candidate</h2>
+<p>This version of the module is a release candidate and is not yet considered stable. Please use with caution and report any issues you encounter.</p>
+<h2>License</h2>
+<p>The jsfluids repository is licensed under the MIT License. The MIT License is a permissive open-source software license that allows users to freely use, modify, and distribute the licensed software for any purpose, without requiring payment or attribution to the original authors. The license also includes a warranty disclaimer, limiting the liability of the authors for any damages resulting from the use of the software.</p>
+<p>A JS module is built from this source code and deployed to the public npm registry as jsfluids. The module is licensed under MIT but it's also bundled with <code>@simzero/rom.js</code> for using <code>ITHACA-FV</code> models. <code>rom.js</code> is licensed under LGPL as a derivative work of <a href="https://github.com/ITHACA-FV/ITHACA-FV">ITHACA-FV</a> developed and maintained at the University of Urbino Carlo Bo by Dr. Giovanni Stabile and at SISSA mathLab in collaboration with Prof. Gianluigi Rozza's group. In jsfluids, the <code>ITHACAFV</code> class is a separate and independent chunk that is dynamically loaded only when calling the class <code>jsfluids.ITHACAFV</code>. This LGPL module is subject to the terms of the GNU Lesser General Public License (LGPL), which is also a permissive open-source software license, but with some additional restrictions on the distribution of derivative works. Users who use the LGPL module in conjunction with the MIT-licensed module must also comply with the LGPL's requirements for attribution, source code distribution, and compatibility with other software.</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 11:06:11 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
