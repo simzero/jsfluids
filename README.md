@@ -1,3 +1,5 @@
+# IMPORTANT NOTICE: The source code for this project will be published on May 10th, 2023. Until then, please refer to the [documentation](https://simzero.github.io/jsfluids/v0.2.0/) for more information. Thank you for your patience.
+
 # jsfluids - A high-level JS module for real-time CFD inference
 
 `jsfluids` is a high-level JavaScript module for inferring/solving fluid dynamics in real-time based on pre-constructed models. The module is also used as the interface with virtual worlds although can be used directly in a backend. The pre-constructed models are based on reduced-order models, data-driven ML or (soon) with PINNs. For ML-based models we rely on ONNX Runtime for solving the new fields and use `jsfluids` for handling inputs and results.
