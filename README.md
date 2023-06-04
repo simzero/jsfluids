@@ -1,4 +1,4 @@
-# IMPORTANT NOTICE: The source code for this project will be published on May 10th, 2023. Until then, please refer to the [documentation](https://simzero.github.io/jsfluids/v0.2.0/) for more information. Thank you for your patience.
+# IMPORTANT NOTICE: We apologize for any inconvenience caused due to the delay in publishing the source code for this project, which was initially scheduled for May 10th, 2023. We are still working to finalize it to ensure the highest quality and functionality. Until then, please refer to the [documentation](https://simzero.github.io/jsfluids/v0.2.0/) for more information. Thank you for your patience.
 
 # jsfluids - A high-level JS module for real-time CFD inference
 
