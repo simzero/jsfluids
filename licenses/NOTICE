@@ -1,0 +1,5 @@
+jsfluids is distributed in the NPM repository along with a third-party library called rom.js, which is licensed under the GNU Lesser General Public License (LGPL). The rom.js package is responsible for compiling the ITHACA-FV class, and it generates two separate chunks: ithacafv.browser.js for browser environments and ithacafv.index.js for Node.js environments. These chunks are loaded dynamically only when requested by the user, allowing for selective usage of the library.
+
+The remainder of the code in this software is licensed under the MIT license.
+
+You should have received a copy of the LGPL license along with this software. If not, you can obtain a copy of the license from https://www.gnu.org/licenses/lgpl-3.0.en.html.

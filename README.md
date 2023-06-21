@@ -1,25 +1,23 @@
-# IMPORTANT NOTICE: We apologize for any inconvenience caused due to the delay in publishing the source code for this project, which was initially scheduled for May 10th, 2023. We are still working to finalize it to ensure the highest quality and functionality. Until then, please refer to the [documentation](https://simzero.github.io/jsfluids/v0.2.0/) for more information. Thank you for your patience.
-
 # jsfluids - A high-level JS module for real-time CFD inference
 
-`jsfluids` is a high-level JavaScript module for inferring/solving fluid dynamics in real-time based on pre-constructed models. The module is also used as the interface with virtual worlds although can be used directly in a backend. The pre-constructed models are based on reduced-order models, data-driven ML or (soon) with PINNs. For ML-based models we rely on ONNX Runtime for solving the new fields and use `jsfluids` for handling inputs and results.
+`jsfluids` is a high-level JavaScript module for inferring/solving fluid dynamics in real-time based on pre-constructed models. The module is also used as the interface with virtual worlds although can be used directly in a backend. The pre-constructed models used in this project are based on reduced-order models or machine-learning techniques, both of which are developed using open-source frameworks. For ML-based models we rely on ONNX Runtime for solving the new fields and use `jsfluids` for handling inputs and results by porting the VTK C++ library.
 
 You can use this module locally, and we've also made it available to you on our playground at https://play.simzero.com. On the playground, you can directly play with the library and share your work. The playground is integrated into Babylon.js as the real-time 3D engine and include other tools such as ONNX and JSCAD for parametric advanced CAD modelling.
 
-Examples for building the pre-constructed models will be soon available together with the code.
+The first examples for building the pre-constructed models are available at the [openfoam-ml-rom](https://github.com/simzero/openfoam-ml-rom) repository. These examples serve as a starting point for utilizing the pre-constructed models and demonstrate the process of building them. By exploring the repository, you'll gain insights into the implementation details, configurations, and usage instructions. Feel free to refer to the repository for more information and to get started with building the pre-constructed models in your own projects. Each example in the repository has an HTML file using `jsfluids` and Babylon.js for visualization and interaction.
 
 ## Installation
 
 You can install this module via npm:
 
 ```
-npm install jsfluids
+npm install @simzero/jsfluids
 ```
 
 Or, you can load it as a script tag in your HTML file:
 
 ```
-<script src="https://unpkg.com/jsfluids/dist/browser.js"></script>
+<script src="https://unpkg.com/@simzero/jsfluids/dist/browser.js"></script>
 ```
 
 This module will soon be available as an ES6 module.
@@ -69,9 +67,45 @@ or
     });
 ```
 
+## Documentation
+
+For detailed information, usage instructions, and API reference, please refer to the project documentation.
+
+- [Documentation](https://simzero.github.io/jsfluids/latest)
+
+
+## Building
+
+To build the project, run the following command:
+
+```console
+make all
+```
+
+This command will build the project using the default configuration.
+
+If you want to specify the number of cores to be used during the build, you can use the `CORES` environment variable. For example:
+
+```console
+CORES=30 make all
+```
+
+This command will utilize 30 cores during the build process, which can help accelerate the build speed on multi-core systems.
+
+Additionally, if you want to bundle ITHACA-FV, you can set the WITH_ITHACAFV environment variable to true. For example:
+
+```console
+CORES=30 WITH_ITHACAFV=true make all
+```
+
+This command will utilize 30 cores during the build and enable the ITHACAFV feature.
+
+Make sure to adjust the command and environment variable values based on your specific project setup and requirements.
+
+
 ## Supported Packages for Pre-Constructed Models
 
-The module supports:
+The module supports ML and ROM modelds from:
 
 - [DeepCFD](https://github.com/mdribeiro/DeepCFD)
 - [ITHACA-FV](https://github.com/mathLab/ITHACA-FV) (laminar and turbulent steady-state supported as of today)
@@ -80,12 +114,8 @@ The module supports:
 
 The following main open-source packages were used in this module:
 
-- [DeepCFD](https://github.com/mdribeiro/DeepCFD)
-- [Eigen](https://eigen.tuxfamily.org)
 - [Emscripten](https://emscripten.org)
-- [ITHACA-FV](https://github.com/mathLab/ITHACA-FV)
 - [ONNX Runtime](https://onnxruntime.ai)
-- [OpenFOAM](https://www.openfoam.com)
 - [VTK](https://vtk.org)
 
 
