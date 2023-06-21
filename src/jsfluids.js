@@ -476,7 +476,6 @@ class ITHACAFVWrapper extends VTKFunctions {
   }
 
   async init(){
-    const test = false;
     if (process.env.WITH_ITHACAFV === 'true') {
       try {
         const ithacafvModule = await import(/* webpackChunkName: "ithacafv" */ './ITHACAFV.js');
@@ -554,9 +553,6 @@ class ITHACAFVWrapper extends VTKFunctions {
 
     const K = await readFile(zipFiles, "K_mat.txt");
     const B = await readFile(zipFiles, "B_mat.txt");
-    const modesU = await readFile(zipFiles, 'EigenModes_U_mat.txt');
-    const modesP = await readFile(zipFiles, 'EigenModes_p_mat.txt');
-    const modesNut = await readFile(zipFiles, 'EigenModes_nut_mat.txt');
     const coeffL2 = await readFile(zipFiles, 'coeffL2_mat.txt');
     const mu = await readFile(zipFiles, 'par.txt');
 
@@ -596,9 +592,20 @@ class ITHACAFVWrapper extends VTKFunctions {
       this.ithacafv.P().set(PData[0]);
     }
 
-    this.ithacafv.modesU().set(modesU[0]);
-    this.ithacafv.modesP().set(modesP[0]);
-    this.ithacafv.modesNut().set(modesNut[0]);
+    if (zipFiles.files['EigenModes_U_mat.txt']) {
+      const modesU = await readFile(zipFiles, 'EigenModes_U_mat.txt');
+      this.ithacafv.modesU().set(modesU[0]);
+    }
+
+    if (zipFiles.files['EigenModes_p_mat.txt']) {
+      const modesP = await readFile(zipFiles, 'EigenModes_p_mat.txt');
+      this.ithacafv.modesP().set(modesP[0]);
+    }
+
+    if (zipFiles.files['EigenModes_nut_mat.txt']) {
+      const modesNut = await readFile(zipFiles, 'EigenModes_nut_mat.txt');
+      this.ithacafv.modesNut().set(modesNut[0]);
+    }
 
     for (let i = 0; i < nPhiNut; i ++ ) {
       const weights = await readFile(zipFiles, 'wRBF_' + i + '_mat.txt');
