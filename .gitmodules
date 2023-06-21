@@ -1,0 +1,6 @@
+[submodule "thirdparty/rom-js"]
+	path = thirdparty/rom-js
+	url = https://github.com/simzero/rom-js.git
+[submodule "thirdparty/vtk"]
+	path = thirdparty/vtk
+	url = https://gitlab.kitware.com/vtk/vtk.git
