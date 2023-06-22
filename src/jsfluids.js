@@ -192,7 +192,6 @@ class MLWrapper extends VTKFunctions {
 
     this.component = "surface";
     this.fieldName = "U";
-    this.nCells = "0";
     this.nComponents = "1";
     this.operations = [];
   }
@@ -214,17 +213,22 @@ class MLWrapper extends VTKFunctions {
    * model.loadMesh(meshURL).then(() => {
    *   ...
    * });
-   * @param {string|Buffer} mesh - The mesh to load, which can be either an URL
+   * @param {Buffer|TypedArray|string} mesh - The mesh to load, which can be either an URL
    * or a buffer of a VTU file:
+   * - If mesh is a buffer, the mesh will be loaded from the buffer.
+   * - If mesh is a TypedArray, the mesh will be decoded from UTF-8 to a string.
    * - If mesh is a string, it is treated as an URL and the mesh will be loaded
    *   from the URL.
-   * - If mesh is a buffer, the mesh will be loaded from the buffer.
    */
   async loadMesh(mesh) {
     await this.init();
     if (Buffer.isBuffer(mesh)) {
-      this.nCells = this.ml.readUnstructuredGrid(mesh);
-    }   else if (typeof mesh === 'string') {
+      this.ml.readUnstructuredGrid(mesh);
+    } else if (ArrayBuffer.isView(mesh)) {
+      const decoder = new TextDecoder('utf-8');
+      const meshString = decoder.decode(mesh);
+      this.ml.readUnstructuredGrid(meshString);
+    } else if (typeof mesh === 'string') {
       const response = await axios.get(mesh);
       this.ml.readUnstructuredGrid(response.data);
     } else {
@@ -511,7 +515,11 @@ class ITHACAFVWrapper extends VTKFunctions {
     await this.init();
     if (Buffer.isBuffer(mesh)) {
       this.ithacafv.readUnstructuredGrid(mesh);
-    }   else if (typeof mesh === 'string') {
+    } else if (ArrayBuffer.isView(mesh)) {
+      const decoder = new TextDecoder('utf-8');
+      const meshString = decoder.decode(mesh);
+      this.ithacafv.readUnstructuredGrid(meshString);
+    } else if (typeof mesh === 'string') {
       const response = await axios.get(mesh);
       this.ithacafv.readUnstructuredGrid(response.data);
     } else {
@@ -532,16 +540,19 @@ class ITHACAFVWrapper extends VTKFunctions {
    * model.loadModel(romURL).then(() => {
    *   ...
    * });
-   * @param {string|Buffer} mesh - The model to load, which can be either an URL
-   * or a buffer of an ITHACA-FV ZIP file:
-   * - If mesh is a string, it is treated as an URL and the model will be loaded
-   *   from the URL.
+   * @param {Buffer|TypedArray|string} mesh - The mesh to load, which can be either an URL
+   * or a buffer of a VTU file:
    * - If mesh is a buffer, the mesh will be loaded from the buffer.
+   * - If mesh is a TypedArray, the mesh will be decoded from UTF-8 to a string.
+   * - If mesh is a string, it is treated as an URL and the mesh will be loaded
+   *   from the URL.
    */
   async loadModel(input) {
     let data;
     if (Buffer.isBuffer(input)) {
         data = input;
+    } else if (ArrayBuffer.isView(input)) {
+      data = input;
     } else if (typeof input === 'string') {
       const response = await axios.get(input, {responseType: 'blob'});
       data = response.data;
