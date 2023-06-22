@@ -1,6 +1,6 @@
 {
   "name": "@simzero/jsfluids",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A high-level JS module for real-time CFD inference",
   "main": "dist/index.js",
   "files": [

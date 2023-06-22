@@ -564,6 +564,7 @@ class ITHACAFVWrapper extends VTKFunctions {
 
     const K = await readFile(zipFiles, "K_mat.txt");
     const B = await readFile(zipFiles, "B_mat.txt");
+    const bt = await readFile(zipFiles, "bt_mat.txt");
     const coeffL2 = await readFile(zipFiles, 'coeffL2_mat.txt');
     const mu = await readFile(zipFiles, 'par.txt');
 
@@ -588,6 +589,7 @@ class ITHACAFVWrapper extends VTKFunctions {
     this.ithacafv.initialize();
     this.ithacafv.K().set(K[0]);
     this.ithacafv.B().set(B[0]);
+    this.ithacafv.bt().set(bt[0]);
     this.ithacafv.coeffL2().set(coeffL2[0]);
     this.ithacafv.mu().set(mu[0]);
 
