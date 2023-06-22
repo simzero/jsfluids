@@ -9,7 +9,8 @@ all: install thirdparty build
 native-all: native-install native-thirdparty native-thirdparty-emcc native-build native-tools
 
 install:
-	$(web-wasm) npm install
+	git submodule update --init --recursive thirdparty/vtk \
+	&& $(web-wasm) npm install
 ifeq ($(WITH_ITHACAFV),true)
 thirdparty:
 	git submodule update --init --recursive thirdparty/rom-js \

@@ -1,8 +1,6 @@
 # Author: Carlos Peña-Monferrer (SIMZERO) - 2023
 #!/bin/bash
 
-git submodule update --init --recursive thirdparty/vtk
-
 echo "#############################"
 echo  BUILDING fluids.js
 echo "#############################"
@@ -28,7 +26,6 @@ ITHACA_ROMPROBLEMS=$BUILD_ROOT_ROMJS/ithaca-fv/src/ITHACA_ROMPROBLEMS
 if [ ! -d ./build  ];then
   mkdir -p ./build
 fi
-
 
 # TODO: check a bug with CMakeLists.txt
 VTK_OPTIONS="
