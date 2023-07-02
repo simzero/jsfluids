@@ -56,12 +56,10 @@ class ML : public VTK {
             fieldVectorVector[i + 2*nCells]
           );
         }
-        if (components == 3) {
-          array->SetTuple3(
+        if (components == 1) {
+          array->SetTuple1(
             i,
-            fieldVectorVector[i],
-            fieldVectorVector[i + nCells],
-            fieldVectorVector[i + 2*nCells]
+            fieldVectorVector[i]
           );
         }
       }

@@ -193,6 +193,7 @@ class MLWrapper extends VTKFunctions {
     this.component = "surface";
     this.fieldName = "U";
     this.nComponents = "1";
+    this.nCells = "0";
     this.operations = [];
   }
 
@@ -223,14 +224,14 @@ class MLWrapper extends VTKFunctions {
   async loadMesh(mesh) {
     await this.init();
     if (Buffer.isBuffer(mesh)) {
-      this.ml.readUnstructuredGrid(mesh);
+      this.nCells = this.ml.readUnstructuredGrid(mesh);
     } else if (ArrayBuffer.isView(mesh)) {
       const decoder = new TextDecoder('utf-8');
       const meshString = decoder.decode(mesh);
-      this.ml.readUnstructuredGrid(meshString);
+      this.nCells = this.ml.readUnstructuredGrid(meshString);
     } else if (typeof mesh === 'string') {
       const response = await axios.get(mesh);
-      this.ml.readUnstructuredGrid(response.data);
+      this.nCells = this.ml.readUnstructuredGrid(response.data);
     } else {
       throw new Error('Invalid input type. Must be either a'
         + ' Buffer or a URL string.');
@@ -274,16 +275,15 @@ class MLWrapper extends VTKFunctions {
    */
   update(dict) {
     this.fieldName = dict.field;
-    if (dict.data.length % 3 === 0) {
+    if (dict.data.length % (3 * this.nCells) === 0) {
       this.ml.fieldVector().set(dict.data)
       this.nComponents = 3;
-    } else if (dict.data.length % 3 === 1) {
+    } else if (dict.data.length % this.nCells === 0) {
       this.ml.fieldScalar().set(dict.data)
       this.nComponents = 1;
     } else {
       throw new Error('Invalid field data, not identified as scalar or vector.');
     }
-
 
     this.ml.update(this.fieldName, this.nComponents);
     super.operations(this.ml, this.operations);
